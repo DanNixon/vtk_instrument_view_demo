@@ -19,7 +19,6 @@
 #define VTK890 1
 #endif
 
-// Constructor
 SideBySideRenderWindowsQt::SideBySideRenderWindowsQt()
 {
   this->setupUi(this);

@@ -1,5 +1,4 @@
-#ifndef SideBySideRenderWindowsQt_H
-#define SideBySideRenderWindowsQt_H
+#pragma once
 
 #include <vtkSmartPointer.h>
 
@@ -12,13 +11,9 @@ class SideBySideRenderWindowsQt : public QMainWindow,
 {
   Q_OBJECT
 public:
-  // Constructor/Destructor
   SideBySideRenderWindowsQt();
   ~SideBySideRenderWindowsQt() = default;
 
 public slots:
-
   void slotExit();
 };
-
-#endif
