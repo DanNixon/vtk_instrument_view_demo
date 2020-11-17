@@ -27,19 +27,7 @@
    <widget class="QVTKOpenGLNativeWidget" name="qvtkWidgetLeft">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
       <width>511</width>
-      <height>541</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QVTKOpenGLNativeWidget" name="qvtkWidgetRight">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>20</y>
-      <width>441</width>
       <height>541</height>
      </rect>
     </property>
