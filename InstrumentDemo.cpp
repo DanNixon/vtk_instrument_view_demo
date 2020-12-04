@@ -3,7 +3,6 @@
 #include <vtkCamera.h>
 #include <vtkCubeSource.h>
 #include <vtkDataObjectToTable.h>
-#include <vtkElevationFilter.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
@@ -33,12 +32,8 @@ InstrumentDemo::InstrumentDemo()
   // Cube
   auto cubeSource = vtkSmartPointer<vtkCubeSource>::New();
   cubeSource->Update();
-  vtkNew<vtkElevationFilter> cubeElev;
-  cubeElev->SetInputConnection(cubeSource->GetOutputPort());
-  cubeElev->SetLowPoint(0, -1.0, 0);
-  cubeElev->SetHighPoint(0, 1.0, 0);
   auto cubeMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-  cubeMapper->SetInputConnection(cubeElev->GetOutputPort());
+  cubeMapper->SetInputConnection(cubeSource->GetOutputPort());
   auto cubeActor = vtkSmartPointer<vtkActor>::New();
   cubeActor->SetMapper(cubeMapper);
 
