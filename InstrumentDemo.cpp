@@ -1,4 +1,4 @@
-#include "SideBySideRenderWindowsQt.h"
+#include "InstrumentDemo.h"
 
 #include <vtkCamera.h>
 #include <vtkCubeSource.h>
@@ -18,7 +18,7 @@
 #define VTK890 1
 #endif
 
-SideBySideRenderWindowsQt::SideBySideRenderWindowsQt()
+InstrumentDemo::InstrumentDemo()
 {
   auto* vtkWidget = new QVTKOpenGLNativeWidget;
   setCentralWidget(vtkWidget);

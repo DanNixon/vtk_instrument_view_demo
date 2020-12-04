@@ -3,7 +3,7 @@
 
 #include <QVTKOpenGLNativeWidget.h>
 
-#include "SideBySideRenderWindowsQt.h"
+#include "InstrumentDemo.h"
 
 int main(int argc, char** argv)
 {
@@ -12,8 +12,8 @@ int main(int argc, char** argv)
 
   QApplication app(argc, argv);
 
-  SideBySideRenderWindowsQt sideBySideRenderWindowsQt;
-  sideBySideRenderWindowsQt.show();
+  InstrumentDemo window;
+  window.show();
 
   return app.exec();
 }
