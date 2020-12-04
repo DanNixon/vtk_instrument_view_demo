@@ -4,16 +4,10 @@
 
 #include <QMainWindow>
 
-#include "ui_SideBySideRenderWindowsQt.h"
-
-class SideBySideRenderWindowsQt : public QMainWindow,
-                                  private Ui::SideBySideRenderWindowsQt
+class SideBySideRenderWindowsQt : public QMainWindow
 {
   Q_OBJECT
 public:
   SideBySideRenderWindowsQt();
   ~SideBySideRenderWindowsQt() = default;
-
-public slots:
-  void slotExit();
 };

@@ -5,7 +5,6 @@
 #include <vtkDataObjectToTable.h>
 #include <vtkElevationFilter.h>
 #include <vtkGenericOpenGLRenderWindow.h>
-#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkQtTableView.h>
@@ -13,6 +12,7 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkVersion.h>
+#include <QVTKOpenGLNativeWidget.h>
 
 #if VTK_VERSION_NUMBER >= 89000000000ULL
 #define VTK890 1
@@ -20,15 +20,14 @@
 
 SideBySideRenderWindowsQt::SideBySideRenderWindowsQt()
 {
-  this->setupUi(this);
+  auto* vtkWidget = new QVTKOpenGLNativeWidget;
+  setCentralWidget(vtkWidget);
 
-  vtkNew<vtkNamedColors> colors;
-
-  vtkNew<vtkGenericOpenGLRenderWindow> renderWindowLeft;
+  vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
 #if VTK890
-  this->qvtkWidgetLeft->setRenderWindow(renderWindowLeft);
+  vtkWidget->setRenderWindow(renderWindow);
 #else
-  this->qvtkWidgetLeft->SetRenderWindow(renderWindowLeft);
+  vtkWidget->SetRenderWindow(renderWindow);
 #endif
 
   // Cube
@@ -43,23 +42,12 @@ SideBySideRenderWindowsQt::SideBySideRenderWindowsQt()
   auto cubeActor = vtkSmartPointer<vtkActor>::New();
   cubeActor->SetMapper(cubeMapper);
 
-  // VTK Renderer
-  auto leftRenderer = vtkSmartPointer<vtkRenderer>::New();
-  leftRenderer->AddActor(cubeActor);
-  leftRenderer->SetBackground(colors->GetColor3d("LightSteelBlue").GetData());
+  auto renderer = vtkSmartPointer<vtkRenderer>::New();
+  renderer->AddActor(cubeActor);
 
-  // VTK/Qt wedded
 #if VTK890
-  this->qvtkWidgetLeft->renderWindow()->AddRenderer(leftRenderer);
+  vtkWidget->renderWindow()->AddRenderer(renderer);
 #else
-  this->qvtkWidgetLeft->GetRenderWindow()->AddRenderer(leftRenderer);
+  vtkWidget->GetRenderWindow()->AddRenderer(renderer);
 #endif
-
-  // Set up action signals and slots
-  connect(this->actionExit, SIGNAL(triggered()), this, SLOT(slotExit()));
-}
-
-void SideBySideRenderWindowsQt::slotExit()
-{
-  qApp->exit();
 }
