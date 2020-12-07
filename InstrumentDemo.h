@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vtkSmartPointer.h>
-
 #include <QMainWindow>
 
 class InstrumentDemo : public QMainWindow

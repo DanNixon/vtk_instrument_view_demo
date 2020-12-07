@@ -1,6 +1,5 @@
 #include <QApplication>
 #include <QSurfaceFormat>
-
 #include <QVTKOpenGLNativeWidget.h>
 
 #include "InstrumentDemo.h"
