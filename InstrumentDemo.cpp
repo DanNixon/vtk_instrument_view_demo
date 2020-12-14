@@ -1,9 +1,13 @@
 #include "InstrumentDemo.h"
 
 #include <QVTKOpenGLNativeWidget.h>
+#include <vtkCellData.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDoubleArray.h>
+#include <vtkFloatArray.h>
 #include <vtkGenericOpenGLRenderWindow.h>
+#include <vtkLookupTable.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
 #include <vtkRectilinearGrid.h>
@@ -47,12 +51,26 @@ InstrumentDemo::InstrumentDemo()
   grid->SetYCoordinates(yArray);
   grid->SetZCoordinates(zArray);
 
+  vtkSmartPointer<vtkFloatArray> cellData = vtkSmartPointer<vtkFloatArray>::New();
+  for (int i = 0; i < 9 * 49; i++)
+    cellData->InsertNextValue(static_cast<float>(9 * 49) / i);
+  grid->GetCellData()->SetScalars(cellData);
+
+  vtkSmartPointer<vtkLookupTable> lut = vtkSmartPointer<vtkLookupTable>::New();
+  lut->SetNumberOfTableValues(9 * 49);
+  lut->Build();
+  vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+  lut->SetTableValue(0, colors->GetColor4d("Blue").GetData());
+  lut->SetTableValue((9 * 49) - 1, colors->GetColor4d("Red").GetData());
+
   vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
 #if VTK_MAJOR_VERSION <= 5
   mapper->SetInputConnection(grid->GetProducerPort());
 #else
   mapper->SetInputData(grid);
 #endif
+  mapper->SetScalarRange(0, (9 * 49) - 1);
+  mapper->SetLookupTable(lut);
 
   vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
   actor->SetMapper(mapper);
