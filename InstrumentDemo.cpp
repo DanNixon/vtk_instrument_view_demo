@@ -2,15 +2,11 @@
 
 #include <QVTKOpenGLNativeWidget.h>
 #include <vtkAssembly.h>
-#include <vtkCamera.h>
 #include <vtkCubeSource.h>
-#include <vtkDataObjectToTable.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkQtTableView.h>
-#include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkVersion.h>
