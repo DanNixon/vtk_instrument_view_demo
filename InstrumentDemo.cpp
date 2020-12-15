@@ -54,7 +54,7 @@ InstrumentDemo::InstrumentDemo()
   vtkSmartPointer<vtkFloatArray> cellData = vtkSmartPointer<vtkFloatArray>::New();
   for (int i = 0; i < 9 * 49; i++)
     cellData->InsertNextValue(static_cast<float>(9 * 49) / i);
-  grid->GetCellData()->SetScalars(cellData);
+  /* grid->GetCellData()->SetScalars(cellData); */
 
   vtkSmartPointer<vtkLookupTable> lut = vtkSmartPointer<vtkLookupTable>::New();
   lut->SetNumberOfTableValues(9 * 49);
