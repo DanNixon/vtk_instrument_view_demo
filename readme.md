@@ -73,20 +73,28 @@ The majority of the work to replace the existing implementation likely resides w
 
 ## Next steps/roadmap
 
-- Demonstration using all bank types Mantid currently supports (6w)
+A potential roadmap for the implementation of a VTK based instrument view in Mantid is given below.
+Note that the durations are given in person weeks.
+
+The majority of work in stages 1, 3 and 4 can be performed by multiple developers in parallel.
+Stage 2 contains the foundation work of integrating VTK in Mantid, therefore a good amount of this will not distribute well over multiple developers.
+
+The task of improving dependency management for Mantid is a prerequisite of stage 2, this removes a non trivial task from this project.
+
+1. Demonstration using all bank types Mantid currently supports (6w)
   - Cylinder
   - Mesh
 
-- Bare minimum implementation of instrument rendering (18w)
+2. Bare minimum implementation of instrument rendering (18w)
   - All detectors rendered
   - Basic picking
   - Intensity mapping
 
-- Full rendering (8w)
+3. Full rendering (8w)
   - Non detector components
   - Axes indicators
   - Intuitive interaction
 
-- Equivalent functionality (18w)
+4. Equivalent functionality (18w)
   - Match picking functionality
   - Other things I have overlooked?
