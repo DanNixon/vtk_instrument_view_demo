@@ -21,7 +21,7 @@ Pros:
 
 Cons:
 - Limited high level functionality
-  - Would still need to keep code for custom bank representation, picking, etc.
+  - Would still need to keep/modify code for custom bank representation, picking, etc.
 
 ### Qt3D
 
@@ -31,9 +31,7 @@ Pros:
 
 Cons:
 - Is Qt
-  - Given the questionable choices made by The Qt Company additional Qt component dependencies should be avoided
-- High level API performance is terrible
-  - If the high level API is avoided then you may as well just be using Vulkan directly
+  - Given the [questionable choices made by The Qt Company regarding open source use of their framework](https://www.theregister.com/2021/01/05/qt_lts_goes_commercial_only/) additional Qt component dependencies should be avoided
 
 ### VTK
 
