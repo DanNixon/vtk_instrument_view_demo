@@ -61,6 +61,9 @@ The included demo application shows how these can be assembled to recreate the c
 - A `vtkDataSetMapper` colours each cell based on it's intensity and a `vtkLookupTable`
 - A custom `vtkInteractionStyle` is used to obtain the coordinates of a selected pixel and the bank it belongs to
 
+A screenshot of the included demo is provided:
+![Demo Application](./demo.png)
+
 ### Risks
 
 The only significant risk involved with this approach is a potential lack of non-OpenGL renderers by the time OpenGL becomes unavailable on a platform we support.
