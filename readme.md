@@ -63,6 +63,12 @@ The included demo application shows how these can be assembled to recreate the c
 - A `vtkDataSetMapper` colours each cell based on it's intensity and a `vtkLookupTable`
 - A custom `vtkInteractionStyle` is used to obtain the coordinates of a selected pixel and the bank it belongs to
 
+### Risks
+
+The only significant risk involved with this approach is a potential lack of non-OpenGL renderers by the time OpenGL becomes unavailable on a platform we support.
+As mentioned above, this is something being worked on and in the worst case it is unlikely that a platform will go unsupported for long given the range of other software in which VTK is used.
+Despite not being in a "zero risk" situation through an adoption of VTK, the risk would be significantly reduced.
+
 ## Implementation within Mantid
 
 ### Overview
