@@ -6,9 +6,38 @@ The continued use of OpenGL for 3D rendering (primarily in the Instrument View) 
 
 - Apple deprecated OpenGL on all platforms (on macOS 10.14) in favour of Metal
 - OpenGL is typically the worst performing graphics API
-- OpenGL is not a pleasent API, which gives rise to readability and performance issues in the Instrument View code
+- OpenGL is not a pleasant API, which gives rise to readability and performance issues in the Instrument View code
 
 To rectify the above issues the instrument view code should be refactored to use a new API (be it a graphics API or higher level).
+
+### Current Implementation
+
+The current implementation of the instrument view uses mostly custom code built on top of OpenGL.
+The following are the main classes/functions involved in rendering an instrument:
+
+`MantidGLWidget` and `Projection3D` contain some OpenGL initialisation and common functionality, e.g. axis indicators.
+
+`InstumentActor` is responsible for controlling interaction between the application and `InstrumentRenderer`.
+This includes tasks such as: obtaining the workspace from the ADS, calculating data ranges and generating colour map, controlling visibility of components.
+
+`InstrumentRenderer::renderInstrument()` wraps the construction of the instrument via the OpenGL API in a call list.
+This is done to prevent the instrument being traversed each time the scene is rendered.
+
+`InstrumentRenderer::draw()` performs the traversal of the instrument geometry and calls the draw function corresponding to they component type.
+
+The following are functions that draw components of a certain type:
+- `InstrumentRenderer::drawGridBank()`
+- `InstrumentRenderer::drawRectangularBank()`
+- `InstrumentRenderer::drawTube()`
+- `InstrumentRenderer::drawStructuredBank()`
+- `InstrumentRenderer::drawSingleDetector()`
+
+Some of the above functions also use functionality in `BankRenderingHelpers`, which contains common functionality for converting component info to OpenGL API calls.
+
+One thing to note is that there is no central location where the rendering happens.
+This is one of the main factors in the current implementation being overly difficult to maintain.
+Due to the nature of the OpenGL API it is split over several functions and mostly mixed in with the traversal of the instrument.
+The use of call lists solve the performance issue that arises, however the entire instrument is traversed again even for small changes.
 
 ## Options Considered
 
