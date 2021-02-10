@@ -1,5 +1,11 @@
 # Cross Platform Graphics Evaluation
 
+## Executive Summary
+
+The Instrument View is a core part of Mantid that is depended on for instrument diagnostics and specific workflows.
+The current implementation of the 3D rendering within the Instrument View is at risk of becoming unsupported on some target platforms and suffers from poor maintainability.
+This document describes a potential solution in which the library used to create said 3D rendering is replaced with an alternative that is currently maintained and more appropriate to the use case.
+
 ## Glossary of Terms
 
 - ADS (Analysis Data Service): The in memory store for data within Mantid
