@@ -1,6 +1,18 @@
 # Cross Platform Graphics Evaluation
 
+## Glossary of Terms
+
+- ADS (Analysis Data Service): The in memory store for data within Mantid
+- Workspace: Proprietary data container used within Mantid
+- OpenGL: Long standing graphics API published by The Khronos Group
+- Qt/The Qt Company: Application framework (and the vendor of said framework) that is heavily used for graphical aspects of Mantid
+
 ## Background
+
+The [Instrument View](https://docs.mantidproject.org/nightly/workbench/instrumentviewer.html) is a tool within Mantid that allows viewing a 3D representation of an instrument, typically but not limited to the sample position, monitors and detectors.
+This can be a significant assistance during commissioning/diagnostics and for certain data reduction workflows.
+
+![Existing Instrument View](./existing_instrument_view.png)
 
 The continued use of OpenGL for 3D rendering (primarily in the Instrument View) is a cause for concern.
 
@@ -8,11 +20,13 @@ The continued use of OpenGL for 3D rendering (primarily in the Instrument View) 
 - OpenGL is typically the worst performing graphics API
 - OpenGL is not a pleasant API, which gives rise to readability and performance issues in the Instrument View code
 
-To rectify the above issues the instrument view code should be refactored to use a new API (be it a graphics API or higher level).
+To rectify the above issues the Instrument View code should be refactored to use a new API (be it a graphics API or higher level).
 
 ### Current Implementation
 
-The current implementation of the instrument view uses mostly custom code built on top of OpenGL.
+Like other GUIs in Mantid the Instrument View is developed using the Qt framework which provides the graphical interface functionality.
+The current implementation of the 3D graphics in the Instrument View uses mostly custom code built on top of OpenGL.
+The 3D graphics are embedded into a Qt window using `QGLWidget` (which is itself a deprecated API within Qt).
 The following are the main classes/functions involved in rendering an instrument:
 
 `MantidGLWidget` and `Projection3D` contain some OpenGL initialisation and common functionality, e.g. axis indicators.
@@ -43,6 +57,11 @@ The use of call lists solve the performance issue that arises, however the entir
 
 ### Vulkan
 
+[Vulkan](https://www.khronos.org/vulkan/) is a graphics API, the specification of which is published by the Khronos Group.
+
+Vulkan is designed to replace OpenGL and was designed to address many of it's shortcomings.
+It has good compatibility with platforms supported by Mantid and typically outperforms the equivalent OpenGL implementation.
+
 Pros:
 - Not OpenGL
 - Very platform/device agnostic
@@ -54,20 +73,34 @@ Cons:
 
 ### Qt3D
 
+[Qt3D](https://doc.qt.io/qt-5/qt3d-overview.html) is an extension to the Qt framework that provides a high level 3D rendering API.
+
+Qt3D provides a general purpose high level abstraction on top of the graphics API.
+The API is based around a scene graph following the same style as `QWidgets` appear in a `QWindow`.
+
 Pros:
 - Can use Vulkan as the graphics API
 - Easy to use, high level API
 
 Cons:
 - Is Qt
-  - Given the [questionable choices made by The Qt Company regarding open source use of their framework](https://www.theregister.com/2021/01/05/qt_lts_goes_commercial_only/) additional Qt component dependencies should be avoided
+  - Given the [questionable choices made by The Qt Company effectively preventing open source use of their framework](https://www.theregister.com/2021/01/05/qt_lts_goes_commercial_only/) additional Qt component dependencies should be avoided
+- API provides little application specific functionality
+  - Representing detectors as objects is too memory and compute intensive
+  - Representing banks as objects requires manual handling of textures and pixel selection (similar to what is done in the current implementation)
 
 ### VTK
+
+[VTK](https://vtk.org/) (The Visualisation Toolkit) is a high level API for data visualisation published by Kitware.
+
+VTK provides a wealth of abstractions from the graphics API specifically for the purpose of data visualisation and is widely used in other scientific data treatment software.
 
 Pros:
 - Very versatile
 - Good performance
 - Easy to embed in a Qt window
+- Removes the need for custom code for certain aspects
+  - Reduces development time and maintenance overhead
 
 Cons:
 - Currently only supports OpenGL
@@ -85,7 +118,7 @@ It has in built support for many of the features required for the Instrument Vie
 - Detector pixel picking
 - Intensity mapping
 
-The included demo application shows how these can be assembled to recreate the core visualisation functionality of the instrument view:
+The included demo application shows how these can be assembled to recreate the core visualisation functionality of the Instrument View:
 - A `vtkRectilinearGrid` is used to represent a 2D detector panel
 - A `vtkDataSetMapper` colours each cell based on it's intensity and a `vtkLookupTable`
 - A custom `vtkInteractionStyle` is used to obtain the coordinates of a selected pixel and the bank it belongs to
@@ -109,7 +142,7 @@ The majority of the work to replace the existing implementation likely resides w
 
 ## Next steps/roadmap
 
-A potential roadmap for the implementation of a VTK based instrument view in Mantid is given below.
+A potential roadmap for the implementation of a VTK based Instrument View in Mantid is given below.
 Note that the durations are given in person weeks.
 
 The majority of work in stages 1, 3 and 4 can be performed by multiple developers in parallel.
