@@ -114,7 +114,7 @@ Cons:
     - https://discourse.vtk.org/t/vulkan-development/3307
     - https://discourse.vtk.org/t/update-on-vulkan-support/2819
 
-## VTK
+## Most Viable Option
 
 The Visualisation Toolkit (VTK) is a well established library for scientific visualisation.
 
