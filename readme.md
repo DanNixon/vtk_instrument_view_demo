@@ -46,6 +46,7 @@ This is done to prevent the instrument being traversed each time the scene is re
 `InstrumentRenderer::draw()` performs the traversal of the instrument geometry and calls the draw function corresponding to they component type.
 
 The following are functions that draw components of a certain type:
+
 - `InstrumentRenderer::drawGridBank()`
 - `InstrumentRenderer::drawRectangularBank()`
 - `InstrumentRenderer::drawTube()`
@@ -69,11 +70,13 @@ Vulkan is designed to replace OpenGL and was designed to address many of it's sh
 It has good compatibility with platforms supported by Mantid and typically outperforms the equivalent OpenGL implementation.
 
 Pros:
+
 - Not OpenGL
 - Very platform/device agnostic
 - Easy to embed in a Qt window
 
 Cons:
+
 - Limited high level functionality
   - Would still need to keep/modify code for custom bank representation, picking, etc.
 
@@ -85,10 +88,12 @@ Qt3D provides a general purpose high level abstraction on top of the graphics AP
 The API is based around a scene graph following the same style as `QWidgets` appear in a `QWindow`.
 
 Pros:
+
 - Can use Vulkan as the graphics API
 - Easy to use, high level API
 
 Cons:
+
 - Is Qt
   - Given the [questionable choices made by The Qt Company effectively preventing open source use of their framework](https://www.theregister.com/2021/01/05/qt_lts_goes_commercial_only/) additional Qt component dependencies should be avoided
 - API provides little application specific functionality
@@ -102,6 +107,7 @@ Cons:
 VTK provides a wealth of abstractions from the graphics API specifically for the purpose of data visualisation and is widely used in other scientific data treatment software.
 
 Pros:
+
 - Very versatile
 - Good performance
 - Easy to embed in a Qt window
@@ -109,6 +115,7 @@ Pros:
   - Reduces development time and maintenance overhead
 
 Cons:
+
 - Currently only supports OpenGL
   - Vulkan support is in the works
     - https://discourse.vtk.org/t/vulkan-development/3307
@@ -125,11 +132,13 @@ It has in built support for many of the features required for the Instrument Vie
 - Intensity mapping
 
 The included demo application shows how these can be assembled to recreate the core visualisation functionality of the Instrument View:
+
 - A `vtkRectilinearGrid` is used to represent a 2D detector panel
 - A `vtkDataSetMapper` colours each cell based on it's intensity and a `vtkLookupTable`
 - A custom `vtkInteractionStyle` is used to obtain the coordinates of a selected pixel and the bank it belongs to
 
 A screenshot of the included demo is provided:
+
 ![Demo Application](./demo.png)
 
 ### Risks
